@@ -8,7 +8,7 @@
   // One problem's reports: how many, from which tenants, and (for small groups) which ids.
   let { ticket, problem, ids = false }: { ticket: number; problem: Problem; ids?: boolean } = $props();
 
-  const g = $derived(splitTicket(reports as Report[], ticket, tenantOf, notes.oneDayMove).groups.find((x) => x.problem === problem));
+  const g = $derived(splitTicket(reports as Report[], ticket, tenantOf, notes.oneDayMove).rows.find((x) => x.problem === problem));
 </script>
 
 {#if g}

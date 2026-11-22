@@ -26,8 +26,10 @@ Not one issue. Fixing the parser leaves the booking-v3 hint and the one-day move
 
 <SplitTable ticket={4471} />
 
-Counted from the desk's export: every report merged into #4471, each id once (the export has
-overlapping pages, so some reports appear twice), each in exactly one problem.
+Counted with the desk's own view, as it was exported: every report merged into #4471, each id once
+(the export has overlapping pages, so some reports appear twice), filed by tenant and channel the way
+the cause table on #4471 files them. The one-day moves stay counted where the desk files them, under
+`parser`, and get a row and a ticket of their own because their fix is different.
 
 ## The problems
 
@@ -50,8 +52,8 @@ it: the hint has to change.
 
 These are not swaps. The booking lands one day early or late, or differently for attendees in
 different places ("Client in Lisbon got Tuesday. Client in Toronto got Monday."). That points at
-time zones when the invite is built. The desk already read them this way (`desk-notes.json`), but
-they were still counted under the parser.
+time zones when the invite is built. The desk already read them this way (`desk-notes.json`) and files
+them under the parser by tenant; the parser fix will not change them.
 
 <ProblemTenants ticket={4471} problem="one-day" ids />
 

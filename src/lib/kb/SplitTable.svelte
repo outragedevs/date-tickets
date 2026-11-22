@@ -9,7 +9,8 @@
   let { ticket }: { ticket: number } = $props();
 
   const split = $derived(splitTicket(reports as Report[], ticket, tenantOf, notes.oneDayMove));
-  const filed = $derived(split.groups.reduce((n, g) => n + g.reports.length, 0));
+  const causes = $derived(split.rows.filter((r) => r.filedUnder === null));
+  const filed = $derived(causes.reduce((n, g) => n + g.reports.length, 0));
   const ref = (p: string) => (tickets as Record<string, { issue: number; url: string; title: string }>)[p];
   const list = (m: Record<string, number>) =>
     Object.entries(m)
@@ -20,8 +21,8 @@
 
 <p class="sum">
   <strong>{split.total}</strong> reports merged into #{ticket} ·
-  <strong>{split.groups.length}</strong> problems ·
-  {filed === split.total ? 'every report counted once' : `${split.total - filed} reports not placed`}
+  <strong>{split.rows.length}</strong> problems ·
+  {filed === split.total ? 'every report filed under one cause' : `${split.total - filed} reports not placed`}
 </p>
 
 <table>
@@ -29,10 +30,10 @@
     <tr><th>problem</th><th>reports</th><th>ticket</th><th>tenants</th><th>came in by</th><th>intake tagged</th><th>seen</th></tr>
   </thead>
   <tbody>
-    {#each split.groups as g (g.problem)}
+    {#each split.rows as g (g.problem)}
       <tr>
         <td><code>{g.problem}</code></td>
-        <td><strong>{g.reports.length}</strong></td>
+        <td><strong>{g.reports.length}</strong>{#if g.filedUnder}<span class="small"> · filed under <code>{g.filedUnder}</code></span>{/if}</td>
         <td>{#if ref(g.problem)}<a href={ref(g.problem).url}>#{ref(g.problem).issue}</a>{:else}<span class="none">none yet</span>{/if}</td>
         <td>{g.tenants.length}</td>
         <td class="small">{list(g.channels)}</td>
