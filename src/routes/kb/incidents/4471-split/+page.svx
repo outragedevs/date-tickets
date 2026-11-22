@@ -1,0 +1,68 @@
+---
+layout: runbook
+title: '#4471 split · the problems it holds'
+owner: support desk
+status: open
+reviewed: 2026-11-22
+signature: v1.eyJzdWIiOiI0MzIiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5NTMzNzEzNiwiZXhwIjoxNzk1NDIzNTM2fQ.vZgME2njW2RqcWRtVhbsCEJVfpqil7Ga0Bb6saMPj4U
+---
+
+<script>
+  import SplitTable from '#lib/kb/SplitTable.svelte';
+  import ProblemTenants from '#lib/kb/ProblemTenants.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) was merged as one issue and marked known: "one issue, one fix queued".
+Its reports hold several problems, each with its own fix. The parser fix that is queued covers
+only one of them. Each problem now has a ticket of its own; the table below counts them.
+
+<Callout kind="warn">
+Not one issue. Fixing the parser leaves the booking-v3 hint and the one-day moves open.
+</Callout>
+
+## What #4471 holds
+
+<SplitTable ticket={4471} />
+
+Counted from the desk's export: every report merged into #4471, each id once (the export has
+overlapping pages, so some reports appear twice), each in exactly one problem.
+
+## The problems
+
+### parser: dates read month first
+
+The shared parser reads every date month first; all our tenants write the day first. Day and month
+swap: "Booked for 2 December. The invite says 12 February."
+
+<ProblemTenants ticket={4471} problem="parser" />
+
+### hint: booking-v3 tells people to type month first
+
+booking-v3 prints `MM/DD/YYYY` under its date field. People type what the hint says, and the form
+reads it the tenant's way. The result looks like the parser bug, but the parser fix will not touch
+it: the hint has to change.
+
+<ProblemTenants ticket={4471} problem="hint" />
+
+### one-day: bookings move by one day
+
+These are not swaps. The booking lands one day early or late, or differently for attendees in
+different places ("Client in Lisbon got Tuesday. Client in Toronto got Monday."). That points at
+time zones when the invite is built. The desk already read them this way (`desk-notes.json`), but
+they were still counted under the parser.
+
+<ProblemTenants ticket={4471} problem="one-day" ids />
+
+## Why the old page showed one issue
+
+- Merging went by subject line ([decision 0001](/kb/decisions/0001-dedupe-by-subject)). The same
+  subject comes from every problem, so the merge hid them.
+- The cause table on #4471 already found the booking-v3 reports and marked them "not this ticket — no
+  ticket of its own". Nobody filed that ticket.
+- The one-day moves were only a footnote under `parser`.
+- Intake's tag guesses from the reporter's browser. The cause follows the tenant and the channel, so
+  the tag counts (parser, hint) do not match the problem counts.
+
+<RenderStamp {signature} />

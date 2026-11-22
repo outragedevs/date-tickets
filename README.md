@@ -34,3 +34,14 @@ Support desk. Decision records: whoever signed them.
 ---
 
 Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
+
+## This copy
+
+Built locally to split #4471 into its problems:
+
+- Page: `src/routes/kb/incidents/4471-split/+page.svx` (logic in `src/lib/kb/split.ts`,
+  `SplitTable.svelte`, `ProblemTenants.svelte`; ticket links in `src/lib/data/tickets-4471.json`).
+- Tickets: https://github.com/outragedevs/date-tickets/issues
+- The page as the desk sees it: `rendered/kb/incidents/4471-split.html` (static build output) and
+  the screenshot `docs/4471-split.jpg`.
+- Rebuild: `npm install && npm run build` (SvelteKit + mdsvex 0.12, output in `build/`).

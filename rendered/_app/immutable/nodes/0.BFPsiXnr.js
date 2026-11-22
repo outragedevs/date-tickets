@@ -1,0 +1,1 @@
+import{t as e}from"../chunks/DK3Fl9T5.js";import{T as t,j as n,w as r,y as i}from"../chunks/DklxxTY_.js";var a=e({prerender:()=>!0});function o(e,a){var o=t(),s=n(o);i(s,()=>a.children),r(e,o)}export{o as component,a as universal};
