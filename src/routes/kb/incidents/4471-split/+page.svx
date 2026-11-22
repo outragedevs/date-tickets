@@ -15,11 +15,12 @@ signature: v1.eyJzdWIiOiI0MzIiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdC
 </script>
 
 [#4471](/kb/incidents/4471) was merged as one issue and marked known: "one issue, one fix queued".
-Its reports hold several problems, each with its own fix. The parser fix that is queued covers
+Its reports hold several problems, each with its own fix. The parser fix that was queued covers
 only one of them. Each problem now has a ticket of its own; the table below counts them.
 
 <Callout kind="warn">
-Not one issue. Fixing the parser leaves the booking-v3 hint and the one-day moves open.
+Not one issue. Engineering closed #4471 on 5 October: the parser is fixed and booking-v3 is retired.
+The one-day moves are still open; neither change touches them.
 </Callout>
 
 ## What #4471 holds
@@ -30,6 +31,14 @@ Counted with the desk's own view, as it was exported: every report merged into #
 (the export has overlapping pages, so some reports appear twice), filed by tenant and channel the way
 the cause table on #4471 files them. The one-day moves stay counted where the desk files them, under
 `parser`, and get a row and a ticket of their own because their fix is different.
+
+## Since 5 October
+
+Engineering closed #4471 on 5 October:
+
+- **parser: fixed** ("fix(dates): parse dd/mm for eu locales"). Its ticket is closed as completed.
+- **hint: won't fix.** The booking-v3 form is retired, and its hint with it. Its ticket is closed as not planned.
+- **one-day: open.** Neither change touches a time zone shift. Its ticket stays open.
 
 ## The problems
 

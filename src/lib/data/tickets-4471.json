@@ -1,5 +1,5 @@
 {
-  "parser": { "issue": 1, "url": "https://github.com/outragedevs/date-tickets/issues/1", "title": "Parser reads dates month first for day-first tenants" },
-  "hint": { "issue": 2, "url": "https://github.com/outragedevs/date-tickets/issues/2", "title": "booking-v3 date hint says MM/DD/YYYY, form reads DD/MM" },
-  "one-day": { "issue": 3, "url": "https://github.com/outragedevs/date-tickets/issues/3", "title": "Bookings move by one day: time zone shift, not a swap" }
+  "parser": { "issue": 1, "url": "https://github.com/outragedevs/date-tickets/issues/1", "title": "Parser reads dates month first for day-first tenants", "state": "closed · fixed", "why": "fix(dates): parse dd/mm for eu locales, 5 Oct" },
+  "hint": { "issue": 2, "url": "https://github.com/outragedevs/date-tickets/issues/2", "title": "booking-v3 date hint says MM/DD/YYYY, form reads DD/MM", "state": "closed · won't fix", "why": "booking-v3 form retired, 5 Oct" },
+  "one-day": { "issue": 3, "url": "https://github.com/outragedevs/date-tickets/issues/3", "title": "Bookings move by one day: time zone shift, not a swap", "state": "open", "why": "no fix yet" }
 }

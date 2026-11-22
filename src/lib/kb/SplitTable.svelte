@@ -11,7 +11,7 @@
   const split = $derived(splitTicket(reports as Report[], ticket, tenantOf, notes.oneDayMove));
   const causes = $derived(split.rows.filter((r) => r.filedUnder === null));
   const filed = $derived(causes.reduce((n, g) => n + g.reports.length, 0));
-  const ref = (p: string) => (tickets as Record<string, { issue: number; url: string; title: string }>)[p];
+  const ref = (p: string) => (tickets as Record<string, { issue: number; url: string; title: string; state: string; why: string }>)[p];
   const list = (m: Record<string, number>) =>
     Object.entries(m)
       .sort((a, b) => b[1] - a[1])
@@ -27,7 +27,7 @@
 
 <table>
   <thead>
-    <tr><th>problem</th><th>reports</th><th>ticket</th><th>tenants</th><th>came in by</th><th>intake tagged</th><th>seen</th></tr>
+    <tr><th>problem</th><th>reports</th><th>ticket</th><th>state</th><th>tenants</th><th>came in by</th><th>intake tagged</th><th>seen</th></tr>
   </thead>
   <tbody>
     {#each split.rows as g (g.problem)}
@@ -35,6 +35,7 @@
         <td><code>{g.problem}</code></td>
         <td><strong>{g.reports.length}</strong>{#if g.filedUnder}<span class="small"> · filed under <code>{g.filedUnder}</code></span>{/if}</td>
         <td>{#if ref(g.problem)}<a href={ref(g.problem).url}>#{ref(g.problem).issue}</a>{:else}<span class="none">none yet</span>{/if}</td>
+        <td class:open={ref(g.problem)?.state === 'open'}>{ref(g.problem)?.state ?? '—'}{#if ref(g.problem)}<br /><span class="small">{ref(g.problem).why}</span>{/if}</td>
         <td>{g.tenants.length}</td>
         <td class="small">{list(g.channels)}</td>
         <td class="small">{list(g.taggedAs)}</td>
@@ -47,5 +48,5 @@
 <style>
   .sum { font-size: 1.1rem; }
   .small { color: var(--muted); font-size: 0.85em; }
-  .none { color: var(--warn); font-weight: 600; }
+  .none, .open { color: var(--warn); font-weight: 600; }
 </style>
